@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS WebdevProject;
 
 USE WebdevProject;
 
-DROP TABLE IF EXISTS Category, Product CASCADE ;
+DROP TABLE IF EXISTS Category, Product CASCADE;
 
 
 CREATE TABLE Category
@@ -20,6 +20,42 @@ CREATE TABLE Product
 
     CONSTRAINT FK_ProductCategory FOREIGN KEY (CategoryId) REFERENCES Category (CategoryId) ON DELETE CASCADE 
 );
+
+CREATE TABLE RTable
+(
+    RTableId    INTEGER         AUTO_INCREMENT PRIMARY KEY,
+    Name        VARCHAR(128)   NOT NULL UNIQUE
+);
+
+CREATE TABLE OrderLine
+(
+    OrderLineId INTEGER         AUTO_INCREMENT PRIMARY KEY,
+    ProductId   INTEGER         NOT NULL,
+    RTableId    INTEGER         NOT NULL,
+    Amount      INTEGER         NOT NULL CHECK (Amount > 0),
+    AmountPaid  DECIMAL(10,2)   NOT NULL CHECK (AmountPaid >= 0),
+
+    CONSTRAINT FK_OrderLineProduct FOREIGN KEY (ProductId) REFERENCES Product (ProductId) ON DELETE CASCADE,
+    CONSTRAINT FK_OrderLineRTable FOREIGN KEY (RTableId) REFERENCES RTable (RTableId) ON DELETE CASCADE
+);
+
+CREATE TABLE Ober (
+    OberId      INTEGER         AUTO_INCREMENT PRIMARY KEY,
+    Name        VARCHAR(128)    NOT NULL,
+    Password    VARCHAR(128)    NOT NULL,
+    Email       VARCHAR(128)    NOT NULL UNIQUE
+);
+
+INSERT INTO RTable (Name) VALUES ('Tafel 1');
+INSERT INTO RTable (Name) VALUES ('Tafel 2');
+INSERT INTO RTable (Name) VALUES ('Tafel 3');
+INSERT INTO RTable (Name) VALUES ('Tafel 4');
+INSERT INTO RTable (Name) VALUES ('Tafel 5');
+INSERT INTO RTable (Name) VALUES ('Tafel 6');
+INSERT INTO RTable (Name) VALUES ('Tafel 7');
+INSERT INTO RTable (Name) VALUES ('Tafel 8');
+INSERT INTO RTable (Name) VALUES ('Tafel 9');
+INSERT INTO RTable (Name) VALUES ('Tafel 10');
 
 INSERT INTO Category (Name) VALUES ('Frisdranken');
 INSERT INTO Category (Name) VALUES ('Bier');
