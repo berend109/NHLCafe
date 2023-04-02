@@ -1,28 +1,35 @@
 ﻿@page
 @model WebdevProjectStarterTemplate.Pages.RegisterModel
 @{
-
-	ViewData["Title"] = "Register";
-
+    ViewData["Title"] = "Register";
 }
 
-<div class="container w-50 shadow-lg p-3 mb-5 rounded">
-	<form>
-		<p class="display-5">Register</p>
-		<div class="mb-3">
-			<label for="exampleInputEmail1" class="form-label">Email address</label>
-			<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-		</div>
-		<div class="mb-3">
-			<label for="exampleInputPassword1" class="form-label">Password</label>
-			<input type="password" class="form-control" id="exampleInputPassword1">
-		</div>
-		<div class="mb-3">
-			<label for="exampleInputPassword2" class="form-label">Confirm Password</label>
-			<input type="password" class="form-control" id="exampleInputPassword2">
-		</div>
-		<button type="submit" class="btn btn-outline-secondary">
-			Submit
-		</button>
-	</form>
+@section Scripts
+    {
+    <script src="@Url.Content("~/js/register.js")" defer></script>
+}
+
+<div class="container w-50 shadow-lg p-3 mb-5 rounded-2">
+    <form method="post">
+        <p class="display-5">Register</p>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input asp-for="user.Name" type="name" class="form-control" id="name" aria-describedby="nameHelp">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input asp-for="user.Email" type="email" class="form-control" id="email" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="password1" class="form-label">Password</label>
+            <input asp-for="user.Password1" type="password" class="form-control" id="password1">
+        </div>
+        <div class="mb-3">
+            <label for="password2" class="form-label">Confirm Password</label>
+            <input asp-for="user.Password2" type="password" class="form-control" id="password2">
+        </div>
+        <button type="submit" class="btn btn-outline-secondary">
+            Submit
+        </button>
+    </form>
 </div>

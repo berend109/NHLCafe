@@ -16,5 +16,5 @@ namespace WebdevProjectStarterTemplate
 
             return new MySqlConnection(connectionString);
         }
-    }
+	}
 }
