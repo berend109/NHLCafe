@@ -15,6 +15,8 @@ namespace WebdevProjectStarterTemplate.Repositories
         public User Add(string username, string email, string password)
 		{
 			using var connectin = GetConnection();
+							// insert into ober (Name, Email, Password) values ('username', 'email', 'password');
+							// check if Oberid already exists
 			string sql =	@"INSERT INTO ober (Name, Email, Password) VALUES (@Name, @Email, @Password);
 							SELECT * FROM ober WHERE OberId = LAST_INSERT_ID();";
 
