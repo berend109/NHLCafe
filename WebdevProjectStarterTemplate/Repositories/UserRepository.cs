@@ -30,8 +30,7 @@ namespace WebdevProjectStarterTemplate.Repositories
 			using var connection = GetConnection();
 
 			// create good sql
-			string sql = @"SELECT * FROM ober WHERE Email = @email";
-
+			string sql = @"SELECT * FROM Ober WHERE Email = @email";
 			var parameters = new { email };
 
 			var user = connection.QuerySingleOrDefault<User>(sql, parameters);

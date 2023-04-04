@@ -20,9 +20,9 @@ namespace WebdevProjectStarterTemplate.Pages
 		{
 			User existinUser = new UserRepository().Get(user.Email);
 
-			if (existinUser == null && user.Password1 == user.Password2) 
+			if (existinUser == null && user.Password == user.Password2) 
 			{
-				new UserRepository().Add(user.Name, user.Email, Hasj.HasjPassword(user.Password1));
+				new UserRepository().Add(user.Name, user.Email, Hasj.HasjPassword(user.Password));
 			}
 
 			return Redirect("/index");
