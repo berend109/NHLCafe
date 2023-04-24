@@ -16,17 +16,17 @@
             {
                 <table class="table table-striped">
                     <tbody>
-                    @foreach (var product in category.Products)
-                    {
-                        <tr>
-                            <td>@product?.Name</td>
-                            <td>@product?.Price</td>
-                        </tr>
-                    }
+                        @foreach (var product in category.Products)
+                        {
+                            <tr>
+                                <td>@product?.Name</td>
+                                <td>@product?.Price</td>
+                            </tr>
+                        }
                     </tbody>
-                </table>    
+                </table>
             }
-            <hr/>
+            <hr />
         }
     </div>
 </div>

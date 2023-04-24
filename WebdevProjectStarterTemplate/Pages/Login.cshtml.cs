@@ -12,6 +12,7 @@ namespace WebdevProjectStarterTemplate.Pages
     {
         [BindProperty]
         public User user { get; set; }
+
         public IActionResult OnGet()
         {
             return Session.IsLoggedIn ? Redirect("/") : Page();
