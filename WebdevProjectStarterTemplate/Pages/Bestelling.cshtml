@@ -14,54 +14,41 @@
 </head>
 
 <body>
-	<div>
-		<div class="tab-content" id="myTabContent">
-			<div class="tab-pane fade show active" id="besteling-tab-pane" role="tabpanel"
-				aria-labelledby="besteling-tab" tabindex="0">
-				<p class="fs-1 mt-3">Bestellen</p>
-				<div class="row">
-					<div class="col-3">
-						<ul class="list-group">
-							@foreach (var item in Model.Categories)
-							{
-								<li class="list-group-item list-group-item-action">@item.Name</li>
-							}
-						</ul>
-					</div>
-					<div class="col-3">
-						<ul class="list-group">
+<div class="tab-content" id="myTabContent">
+	<div class="tab-pane fade show active" id="besteling-tab-pane" role="tabpanel"
+	     aria-labelledby="besteling-tab" tabindex="0">
+		<p class="fs-1 mt-3">Bestellen</p>
+		<div class="row">
+			<div class="col-3">
+				<ul class="list-group">
+					@foreach (var item in Model.Categories)
+					{
+						<li class="list-group-item list-group-item-action">@item.Name</li>
+					}
+				</ul>
+			</div>
+			<div class="col-3">
+				<ul class="list-group">
 							
-						</ul>
-					</div>
-					<div class="col-6">
-						<table class="table table-striped">
-							<thead>
-								<th scope="col">Product</th>
-								<th scope="col">Totaal</th>
-								<th scope="col"></th>
-							</thead>
-							<tbody>
+				</ul>
+			</div>
+			<div class="col-6">
+				<table class="table table-striped">
+					<thead>
+					<th scope="col">Product</th>
+					<th scope="col">Totaal</th>
+					<th scope="col"></th>
+					</thead>
+					<tbody>
 							
-							</tbody>
-						</table>
-					</div>
+					</tbody>
+				</table>
+			</div>
 
-				</div>
-			</div>
-			<div class="tab-pane fade" id="Overzicht-tab-pane" role="tabpanel" aria-labelledby="Overzicht-tab"
-				tabindex="0">
-				overzicht
-			</div>
-			<div class="tab-pane fade" id="abetalen-tab-pane" role="tabpanel" aria-labelledby="abetalen-tab-tab"
-				tabindex="0">
-				Alles betalen
-			</div>
-			<div class="tab-pane fade" id="ppbetalen-tab-pane" role="tabpanel" aria-labelledby="ppbetalen-tab"
-				tabindex="0">
-				per persoon betalen
-			</div>
 		</div>
 	</div>
+</div>
+	
 </body>
 
 </html>
