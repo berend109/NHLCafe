@@ -14,27 +14,29 @@ namespace WebdevProjectStarterTemplate.Pages
         public User user { get; set; }
         public IActionResult OnGet()
         {
-            Session session = new Session();
-
-            bool user = Session.CheckIfLoggedIn(HttpContext.Session.GetString("username"));
-
-            return user ? Redirect("/") : Page();
+            return Session.IsLoggedIn ? Redirect("/") : Page();
         }
 
         public IActionResult OnPost()
         {
             User existingUser = new UserRepository().Get(user.Email);
 
-            if (existingUser != null && (Hasj.HasjPassword(user.Password) == existingUser.Password))
+            if (Hasj.HasjPassword(user.Password) == existingUser.Password)
             {
+                // Clear password for security reasons
                 existingUser.Password = "";
 
-                string user = JsonConvert.SerializeObject(existingUser);
-                HttpContext.Session.SetString("username", user);
+                // Serialize user object to JSON string and store in session
+                string serializedUser = JsonConvert.SerializeObject(existingUser);
+                HttpContext.Session.SetString("user", serializedUser);
 
+                // set logged in to true
+                Session.IsLoggedIn = true;
+
+                // Redirect to desired page
                 return Redirect("/Bestelling");
             }
-
+            // Return current page since login was unsuccessful
             return Page();
         }
     }
