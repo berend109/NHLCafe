@@ -32,7 +32,7 @@ namespace WebdevProjectStarterTemplate.Pages
                 string user = JsonConvert.SerializeObject(existingUser);
                 HttpContext.Session.SetString("username", user);
 
-                return Redirect("/Drankenkaart");
+                return Redirect("/Bestelling");
             }
 
             return Page();
