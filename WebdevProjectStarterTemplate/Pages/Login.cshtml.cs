@@ -15,10 +15,10 @@ namespace WebdevProjectStarterTemplate.Pages
         public IActionResult OnGet()
         {
             Session session = new Session();
-            
-            bool user = session.CheckIfLoggedIn(HttpContext.Session.GetString("username"));
-            
-            return user? Redirect("/Index") : Page();
+
+            bool user = Session.CheckIfLoggedIn(HttpContext.Session.GetString("username"));
+
+            return user ? Redirect("/") : Page();
         }
 
         public IActionResult OnPost()
@@ -28,13 +28,13 @@ namespace WebdevProjectStarterTemplate.Pages
             if (existingUser != null && (Hasj.HasjPassword(user.Password) == existingUser.Password))
             {
                 existingUser.Password = "";
-                
+
                 string user = JsonConvert.SerializeObject(existingUser);
                 HttpContext.Session.SetString("username", user);
-                
+
                 return Redirect("/Drankenkaart");
             }
-            
+
             return Page();
         }
     }
