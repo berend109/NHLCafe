@@ -2,18 +2,40 @@
 @model WebdevProjectStarterTemplate.Pages.Drankenkaart
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Drankenkaart";
 }
 
 <!DOCTYPE html>
 
 <html>
-<head>
-    <title></title>
-</head>
 <body>
-<div>
-    <p>Pagina voor drankenkaart</p>
+<div class="row mt-3">
+    <div class="col">
+        @foreach(var category in Model.Categories)
+        {
+            <h2>@category.Name</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>product</th>
+                    <th>prijs</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var product in Model.ProductWithCategory)
+                {
+                    if (product.Category.Name == category.Name)
+                    {
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@product.Price</td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        }
+    </div>
 </div>
 </body>
 </html>
