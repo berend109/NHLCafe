@@ -22,7 +22,7 @@ namespace WebdevProjectStarterTemplate.Pages
 
 			if (existinUser == null && user.Password == user.Password2) 
 			{
-				new UserRepository().Add(user.Name, user.Email, Hasj.HasjPassword(user.Password));
+				new UserRepository().Add(user.Name, user.Email, Hash.HashPassword(user.Password));
 			}
 
 			return Redirect("/index");

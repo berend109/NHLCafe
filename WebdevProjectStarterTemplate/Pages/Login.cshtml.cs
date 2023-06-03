@@ -22,7 +22,7 @@ namespace WebdevProjectStarterTemplate.Pages
         {
             User existingUser = new UserRepository().Get(user.Email);
 
-            if (Hasj.HasjPassword(user.Password) == existingUser.Password)
+            if (Hash.HashPassword(user.Password) == existingUser.Password)
             {
                 // Clear password for security reasons
                 existingUser.Password = "";
