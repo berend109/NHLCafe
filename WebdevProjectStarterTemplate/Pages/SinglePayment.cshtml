@@ -23,7 +23,8 @@
 					@foreach (string key in HttpContext.Session.Keys)
 					{
 						@if(key == "user") {continue;}
-						payAmount = Model.Products.FirstOrDefault(p => p.Name == key)?.Price * HttpContext.Session.GetInt32(key);
+						payAmount = Model.Products.FirstOrDefault(p => p.Name == key)?
+							.Price * HttpContext.Session.GetInt32(key);
 						totalPayAmount += payAmount;
 						<tr>
 							<td>@key</td>
