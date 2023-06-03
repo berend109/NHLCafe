@@ -1,0 +1,53 @@
+@page
+@model WebdevProjectStarterTemplate.Pages.Overzicht
+
+@{
+	ViewData["Title"] = "Overzicht";
+	decimal? totalPayAmount = 0, payAmount = 0;	
+}
+
+<div xmlns="http://www.w3.org/1999/html">
+	<div class="row">
+		<div class="row-12">
+			<table class="table table-striped">
+				<tr>
+					<th>Product</th>
+					<th>Aantal</th>
+					<th>Prijs</th>
+					<th>Totaal</th>
+				</tr>
+				@foreach(string key in HttpContext.Session.Keys) {
+					@if(key == "TotalPayAmount" || key == "user") { continue; }
+					payAmount = Model.Products.First(p => p.Name == key).Price * HttpContext.Session.GetInt32(key);
+					totalPayAmount += payAmount;
+					<form method="post">
+						<tr>
+							<td>@key</td>
+							<td>
+								<button name="action" value="min" asp-page-handler="Add" type="submit"><i class="fa fa-minus-circle"></i></button>
+								<input type="hidden" name="DrinkName" value="@key">
+								@HttpContext.Session.GetInt32(key)
+								<button name="action" value="plus" asp-page-handler="Add" type="submit"><i class="fa fa-plus-circle"></i></button>
+							</td>
+							<td>
+								€@(Model.Products.First(p => p.Name == key).Price)
+							</td>
+							<td>
+								€@payAmount
+							</td>
+						</tr>
+					</form>
+				}
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><strong>€@totalPayAmount</strong></td>
+				</tr>
+			</table>
+			<br />
+			<a href="/Rekening" class="btn btn-outline-primary col-3 float-end w-25">Betalen</a>
+			<a href="/PPBetalen" class="btn btn-outline-primary col-3 float-end w-25">Per persoon betalen</a>
+		</div>
+	</div>
+</div>
