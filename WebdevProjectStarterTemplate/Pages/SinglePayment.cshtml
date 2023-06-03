@@ -1,0 +1,54 @@
+@page
+@model WebdevProjectStarterTemplate.Pages.SinglePayment
+
+@{
+	ViewData["Title"] = "Betaling";
+	decimal? totalPayAmount = 0, payAmount = 0;
+}
+
+<div class="row">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<table class="table table-striped">
+					<thead>
+					<tr>
+						<th>Product</th>
+						<th>Aantal</th>
+						<th>Prijs</th>
+						<th>Totaal</th>
+					</tr>
+					</thead>
+					<tbody>
+					@foreach (string key in HttpContext.Session.Keys)
+					{
+						@if(key == "user") {continue;}
+						payAmount = Model.Products.FirstOrDefault(p => p.Name == key)?.Price * HttpContext.Session.GetInt32(key);
+						totalPayAmount += payAmount;
+						<tr>
+							<td>@key</td>
+							<td>
+								@HttpContext.Session.GetInt32(key)
+							</td>
+							<td>
+								€@(Model.Products.FirstOrDefault(p => p.Name == key).Price)
+							</td>
+							<td>
+								@payAmount
+							</td>
+						</tr>
+					}
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><strong>@totalPayAmount</strong></td>
+					</tr>
+					</tbody>
+				</table>
+				<br />
+				<a href="/Index" class="btn btn-primary">Betalen</a>
+			</div>
+		</div>
+	</div>	
+</div>

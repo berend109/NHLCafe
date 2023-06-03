@@ -1,0 +1,73 @@
+@page
+@model WebdevProjectStarterTemplate.Pages.MultiPayment
+
+@{
+	ViewData["Title"] = "Betaling";
+	decimal? totalPayAmount = 0, payAmount = 0;
+}
+
+<div>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				@if (HttpContext.Session.Keys.Count() > 0)
+				{
+					<table class="table table-striped">
+						<tr>
+							<th>Product</th>
+							<th>Aantal</th>
+							<th>Prijs</th>
+							<th>Totaal</th>
+						</tr>
+						@foreach (var key in HttpContext.Session.Keys)
+						{
+							@if (key == "user")
+							{
+								HttpContext.Session.Remove("user");
+								continue;
+							}
+							payAmount = Model.Products.Where(p => p.Name == key).First().Price * HttpContext.Session.GetInt32(key);
+							totalPayAmount += payAmount;
+							<form method="POST">
+								<tr>
+									<td>@key</td>
+									<td>
+										<p>
+											<button name="action" value="min" asp-page-handler="Add" type="submit"><i class="fa fa-minus-circle"></i></button>
+											<input type="hidden" name="drinkName" value="@key">
+											@MultiPayment.ProductsToPay[key]
+											<button name="action" value="plus" asp-page-handler="Add" type="submit"><i class="fa fa-plus-circle"></i></button>
+											van @HttpContext.Session.GetInt32(key)
+										</p>
+									</td>
+									<td>
+										€@Model.Products.Where(p => p.Name == key).First().Price
+									</td>
+									<td>
+										€@payAmount
+									</td>
+								</tr>
+							</form>
+						}
+						<tr>
+							<td><strong>Te betalen</strong></td>
+							<td></td>
+							<td></td>
+							<td><strong>€@totalPayAmount</strong></td>
+						</tr>
+					</table>
+				}
+				else
+				{
+					<p>Alles is betaald</p>
+				}
+				<form method="POST">
+					@if (HttpContext.Session.Keys.Any())
+					{
+						<button asp-page-handler="Pay" type="submit" class="btn btn-outline-primary col-3">Betalen</button>
+					}
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
