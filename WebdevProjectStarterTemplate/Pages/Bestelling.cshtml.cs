@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebdevProjectStarterTemplate.Models;
 using WebdevProjectStarterTemplate.Repositories;
-
 namespace WebdevProjectStarterTemplate.Pages;
 
 public class Bestelling : PageModel
@@ -11,7 +10,7 @@ public class Bestelling : PageModel
 	private List<Category> categories = MainRepository<Category>.Get().OrderBy(x => x.Name).ToList();
 	private List<Product> products = MainRepository<Product>.Get().OrderBy(x => x.Name).ToList();
     
-	public List<Category> Categories => categories;
+	public List<Category> Categorys => categories;
 	public List<Product> Products => products;
     
     
