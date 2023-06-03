@@ -7,3 +7,4 @@ riderModule.iml
 .vs
 .vscode
 /WebdevProjectStarterTemplate/WebdevProjectStarterTemplate.csproj.user
+.DS_store
