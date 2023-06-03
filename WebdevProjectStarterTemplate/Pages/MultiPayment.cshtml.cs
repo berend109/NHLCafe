@@ -6,21 +6,21 @@ namespace WebdevProjectStarterTemplate.Pages;
 
 public class MultiPayment : PageModel
 {
-	
+
 	private readonly List<Product> products = MainRepository<Product>.Get().ToList();
 	public List<Product> Products => products;
 	// dictionary to store the products to pay with key and value
 	// key = product name, value = amount of products
 	// this is for me the easiest way to store the products to pay (I think)
 	public static Dictionary<string, int> ProductsToPay = new();
-	
+
 	public void OnGet()
 	{
 		HttpContext.Session.Remove("user");
-		foreach (var key in HttpContext.Session.Keys )
+		foreach (var key in HttpContext.Session.Keys)
 		{
 			ProductsToPay.Add(key, 0);
-		}	
+		}
 	}
 
 	public void OnPostAdd(string drinkName, string action)
@@ -57,7 +57,8 @@ public class MultiPayment : PageModel
 			ProductsToPay.Remove(key);
 		}
 
-		foreach (var key in ProductsToPay.Keys)
+		foreach (var key in ProductsToPay.Keys.Where(
+			         key => HttpContext.Session.GetInt32(key) == null))
 		{
 			ProductsToPay[key] = 0;
 		}
