@@ -24,10 +24,14 @@
 						<tr>
 							<td>@key</td>
 							<td>
-								<button name="action" value="min" asp-page-handler="Add" type="submit"><i class="fa fa-minus-circle"></i></button>
+								<button class="btn" name="action" value="min" asp-page-handler="Add" type="submit">
+									<i class="fa fa-minus-circle"></i>
+								</button>
 								<input type="hidden" name="DrinkName" value="@key">
 								@HttpContext.Session.GetInt32(key)
-								<button name="action" value="plus" asp-page-handler="Add" type="submit"><i class="fa fa-plus-circle"></i></button>
+								<button class="btn" name="action" value="plus" asp-page-handler="Add" type="submit">
+									<i class="fa fa-plus-circle"></i>
+								</button>
 							</td>
 							<td>
 								€@(Model.Products.First(p => p.Name == key).Price)

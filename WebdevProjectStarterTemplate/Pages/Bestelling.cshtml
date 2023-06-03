@@ -33,7 +33,7 @@
 							{
 								<button id="@item.ProductId" name="productId" asp-for="SelectedProductId" value="@item.ProductId" type="submit" class="list-group-item list-group-item-action">
 									@item.Name
-									<a class="float-end text-decoration-none fa fa-plus"></a>
+									<i class="float-end text-decoration-none fa fa-plus"></i>
 								</button>
 								<input type="hidden" name="action" value="add" />
 							}
@@ -42,43 +42,47 @@
 				}
 			</div>
 			
-				<div class="col-6">
-					<table class="table table-striped">
-						<tr>
-							<th scope="col">Product</th>
-							<th scope="col float-end">Aantal</th>
-						</tr>
-						@if (HttpContext.Session.Keys.Count() > 2)
+			<div class="col-6">
+				<table class="table table-striped">
+					<tr>
+						<th scope="col">Product</th>
+						<th scope="col float-end">Aantal</th>
+					</tr>
+					@if (HttpContext.Session.Keys.Count() > 2)
+					{
+						<tbody>
+						@foreach (var key in HttpContext.Session.Keys)
 						{
-							<tbody>
-							@foreach (var key in HttpContext.Session.Keys)
+							@if (key is "SelectedProductId" or "SelectedCategoryId" || string.IsNullOrWhiteSpace(key) || key is "user")
 							{
-								@if (key is "SelectedProductId" or "SelectedCategoryId" || string.IsNullOrWhiteSpace(key) || key is "user")
-								{
-									continue;
-								}
+								continue;
+							}
 
+							<form method="post">
 								<tr>
 									<td>@key</td>
 									<td>
-										<form method="post">
-											<button name="action" value="remove" class="text-decoration-none fa fa-minus-circle"></button>
-											<input type="hidden" name="DrinkName" value="@key">
-											@HttpContext.Session.GetInt32(key)
-											<button name="action" value="add" class="text-decoration-none fa fa-plus-circle"></button>
-											<input type="hidden" name="DrinkAmount" value="@HttpContext.Session.GetInt32(key)">
-											<p class="float-end">
-												<button name="action" value="delete" class="text-decoration-none fa fa-trash"></button>
-											</p>
-										</form>
+										<button class="btn" name="action" value="remove" >
+											<i class="fa fa-plus-circle"></i>
+										</button>
+										<input type="hidden" name="DrinkName" value="@key">
+										@HttpContext.Session.GetInt32(key)
+										<button class="btn "name="action" value="add" >
+											<i class="fa fa-plus-circle"></i>	
+										</button>
+										<input type="hidden" name="DrinkAmount" value="@HttpContext.Session.GetInt32(key)">
+										<p class="float-end">
+											<button name="action" value="delete" class="text-decoration-none fa fa-trash"></button>
+										</p>
 									</td>
 								</tr>
-							}
-							</tbody>
+							</form>
 						}
-					</table>
-					<a href="/Overzicht" class="btn btn-primary float-end">Bestellen</a>
-				</div>	
+						</tbody>
+					}
+				</table>
+				<a href="/Overzicht" class="btn btn-primary float-end">Bestellen</a>
+			</div>	
 		</div>
 	</div>
 </div>
