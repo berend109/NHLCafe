@@ -1,19 +1,12 @@
 @page
+@using WebdevProjectStarterTemplate.Models
 @model WebdevProjectStarterTemplate.Pages.Bestelling
 
 @{
 	ViewData["Title"] = "Bestelling";
+	string button;
 }
 
-<!DOCTYPE html>
-
-<html lang="nl">
-
-<head>
-	<title></title>
-</head>
-
-<body>
 <div class="tab-content" id="myTabContent">
 	<div class="tab-pane fade show active" id="besteling-tab-pane" role="tabpanel"
 	     aria-labelledby="besteling-tab" tabindex="0">
@@ -21,34 +14,72 @@
 		<div class="row">
 			<div class="col-3">
 				<ul class="list-group">
-					@foreach (var item in Model.Categories)
-					{
-						<li class="list-group-item list-group-item-action">@item.Name</li>
-					}
+					<form method="post">
+						@foreach (Category item in Model.Categories)
+						{
+							button = (Model.SelectedCategoryId == item.CategoryId) ? "active" : "";
+							<button id="@item.CategoryId" name="categoryID" asp-for="SelectedCategoryId" value="@item.CategoryId" type="submit" class="list-group-item list-group-item-action @button">
+								@item.Name
+							</button>
+						}
+					</form>
 				</ul>
 			</div>
 			<div class="col-3">
-				<ul class="list-group">
-							
-				</ul>
+				@if (Model.SelectedCategoryId > 0)
+				{
+					<ul class="list-group">
+						<form method="post">
+							@foreach (Product product in Model.Products)
+							{
+								<button id="@product.ProductId" name="productId" asp-for="SelectedProductId" value="@product.ProductId" type="submit" class="list-group-item list-group-item-action">
+									@product.Name
+									<a class="float-end text-decoration-none fa fa-plus"></a>
+								</button>
+								<input type="hidden" name="action" value="add" />
+							}
+						</form>
+					</ul>
+				}
 			</div>
-			<div class="col-6">
-				<table class="table table-striped">
-					<thead>
-					<th scope="col">Product</th>
-					<th scope="col">Totaal</th>
-					<th scope="col"></th>
-					</thead>
-					<tbody>
+			@if (HttpContext.Session.Keys.Count() > 2)
+			{
+				<div class="col-6">
+					<table class="table table-striped">
+						<thead>
+						<th scope="col">Product</th>
+						<th scope="col">Totaal</th>
+						<th scope="col"></th>
+						</thead>
+						<tbody>
+						@foreach (var key in HttpContext.Session.Keys)
+						{
+							@if(key is "SelectedProductId" or "SelectedCategoryId" || string.IsNullOrWhiteSpace(key))
+							{
+								continue;
+							}
 							
-					</tbody>
-				</table>
-			</div>
-
+							<tr>
+								<td>@key</td>
+								<td>
+									<form method="post">
+										<button name="action" value="remove" type="submit" class="text-decoration-none fa fa-plus"></button>
+										<input type="hidden" name="DrinkName" value="@key" />
+										@HttpContext.Session.GetString(key)
+										<button name="action" value="add" class="text-decoration-none fa fa-plus"></button>
+										<input type="hidden" name="Amount" value="@HttpContext.Session.GetString(key)" />
+										<p class="float-end">
+											<button name="action" value="delete" class="text-decoration-none fa fa-trash"></button>
+										</p>
+									</form>
+								</td>
+							</tr>
+						}
+						</tbody>
+					</table>
+					<a href="/Overzicht" class="btn btn-primary float-end">Bestellen</a>
+				</div>	
+			}
 		</div>
 	</div>
 </div>
-	
-</body>
-
-</html>
