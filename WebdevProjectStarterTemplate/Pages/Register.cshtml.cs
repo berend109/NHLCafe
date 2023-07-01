@@ -11,10 +11,7 @@ namespace WebdevProjectStarterTemplate.Pages
 		[BindProperty]
 		public User user { get; set; }
 
-		public void OnGet()
-		{
-
-		}
+		public void OnGet() {}
 
 		public IActionResult OnPost()
 		{

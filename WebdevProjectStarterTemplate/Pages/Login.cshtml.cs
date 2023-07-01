@@ -11,7 +11,7 @@ namespace WebdevProjectStarterTemplate.Pages
     public class LoginModel : PageModel
     {
         [BindProperty]
-        public User user { get; set; }
+        public User? user { get; set; }
 
         public IActionResult OnGet()
         {
@@ -27,17 +27,15 @@ namespace WebdevProjectStarterTemplate.Pages
                 // Clear password for security reasons
                 existingUser.Password = "";
 
-                // Serialize user object to JSON string and store in session
+                // Serialize user object to JSON string and store in session,
+                // this is needed because only strings can be stored in session.
                 string serializedUser = JsonConvert.SerializeObject(existingUser);
                 HttpContext.Session.SetString("user", serializedUser);
 
-                // set logged in to true
                 Session.IsLoggedIn = true;
 
-                // Redirect to desired page
                 return Redirect("/Bestelling");
             }
-            // Return current page since login was unsuccessful
             return Page();
         }
     }
