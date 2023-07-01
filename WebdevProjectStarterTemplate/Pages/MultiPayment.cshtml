@@ -23,7 +23,6 @@
 						{
 							@if (key == "user")
 							{
-								HttpContext.Session.Remove("user");
 								continue;
 							}
 							payAmount = Model.Products.First(p => p.Name == key)

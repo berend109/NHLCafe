@@ -52,13 +52,18 @@ public class MultiPayment : PageModel
 
 	public void OnPostPay()
 	{
-		foreach (var v in ProductsToPay.Keys)
+		foreach (var key in ProductsToPay.Keys)
 		{
-			HttpContext.Session.SetInt32(v, HttpContext.Session.GetInt32(v).Value - ProductsToPay[v]);
+			if (key == "user")
+			{
+				continue;
+			}
+			Console.WriteLine(HttpContext.Session.GetInt32(key).Value);
+			HttpContext.Session.SetInt32(key, HttpContext.Session.GetInt32(key).Value - ProductsToPay[key]);
 
-			if (HttpContext.Session.GetInt32(v) != 0) continue;
-			HttpContext.Session.Remove(v);
-			ProductsToPay.Remove(v);
+			if (HttpContext.Session.GetInt32(key) != 0) continue;
+			HttpContext.Session.Remove(key);
+			ProductsToPay.Remove(key);
 		}
 
 		foreach (var key in ProductsToPay.Keys)

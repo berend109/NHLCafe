@@ -10,21 +10,26 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				<table class="table table-striped">
-					<thead>
+				@if (HttpContext.Session.Keys.Count() > 0)
+				{
+					<table class="table table-striped">
+						<thead>
 						<tr>
 							<th>Product</th>
 							<th>Aantal</th>
 							<th>Prijs</th>
 							<th>Totaal</th>
 						</tr>
-					</thead>
-					<tbody>
+						</thead>
+						<tbody>
 						@foreach (var key in HttpContext.Session.Keys)
 						{
-							if (key == "user") { continue; }
+							if (key == "user")
+							{
+								continue;
+							}
 							payAmount = Model.Products.FirstOrDefault(p => p.Name == key)?.Price *
-							HttpContext.Session.GetInt32(key);
+							            HttpContext.Session.GetInt32(key);
 							totalPayAmount += payAmount;
 							<tr>
 								<td>@key</td>
@@ -39,11 +44,16 @@
 							<td></td>
 							<td><strong>@totalPayAmount</strong></td>
 						</tr>
-					</tbody>
-				</table>
-				<form method="post">
-					<button type="submit" class="btn btn-primary" name="paymentButton">Betalen</button>
-				</form>
+						</tbody>
+					</table>
+					<form method="post">
+						<button type="submit" class="btn btn-primary" name="paymentButton">Betalen</button>
+					</form>
+				}
+				else
+				{
+					<p>Alles is betaald</p>
+				}
 			</div>
 		</div>
 	</div>
