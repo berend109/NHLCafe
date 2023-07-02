@@ -1,5 +1,5 @@
 @page
-@model WebdevProjectStarterTemplate.Pages.Overzicht
+@model WebdevProjectStarterTemplate.Pages.Overview
 
 @{
 	ViewData["Title"] = "Overzicht";
@@ -9,7 +9,7 @@
 <div xmlns="http://www.w3.org/1999/html">
 	<div class="row">
 		<div class="row-12">
-			<table class="table table-striped">
+			<table class="table table-striped table-hover">
 				<tr>
 					<th>Product</th>
 					<th>Aantal</th>
@@ -50,8 +50,8 @@
 				</tr>
 			</table>
 			<br />
-			<a href="/SinglePayment" class="btn btn-outline-primary col-3 float-end w-25">Betalen</a>
-			<a href="/MultiPayment" class="btn btn-outline-primary col-3 float-end w-25">Per persoon betalen</a>
+			<a href="/MultiPayment" class="btn btn-primary float-end mx-1">Betalen per persoon</a>
+			<a href="/SinglePayment" class="btn btn-primary float-end ">Alles betalen</a>
 		</div>
 	</div>
 </div>

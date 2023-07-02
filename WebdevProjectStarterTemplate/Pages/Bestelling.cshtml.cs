@@ -30,7 +30,10 @@ public class Bestelling : PageModel
         set => HttpContext.Session.SetInt32("SelectedProductId", value);
     }
 
-    // get products from database based on selected category
+    /// <summary>
+    /// Get products from database based on selected category
+    /// </summary>
+    /// <returns>filtered products</returns>
     private List<Product> FilterProducts()
     {
         return Products.Where(p => p.CategoryId == SelectedCategoryId)
@@ -42,41 +45,32 @@ public class Bestelling : PageModel
     public void OnPost(string DrinkName, string action, int Amount)
     {
         Products = FilterProducts();
-        var selectedProduct = string.Empty;
 
-        if (SelectedProductId != 0)
+        if (SelectedProductId == 0) return;
+        var selectedProduct = !string.IsNullOrEmpty(DrinkName) ? DrinkName : 
+            Products.FirstOrDefault(p => p.ProductId == SelectedProductId)?.Name;
+
+        if (HttpContext.Session.GetInt32(selectedProduct ?? throw new InvalidOperationException()) is not null && Amount == 0)
         {
-            //kijken of we het product kunnen achterhalen als het er nog niet is
-            if (string.IsNullOrEmpty(DrinkName))
-            {
-                selectedProduct = Products.Where(p => p.ProductId == SelectedProductId).FirstOrDefault().Name;
-            }
-            //of gewoon aannemen als het er al is
-            else { selectedProduct = DrinkName; }
-            //kijken of het product al in de sessie staat, zo ja pak dan de opgeslagen count van et bepaalde product
-            if (HttpContext.Session.GetInt32(selectedProduct) is not null && Amount == 0)
-            {
-                Amount = (int)HttpContext.Session.GetInt32(selectedProduct);
-            }
-            //toevoegen van een product
-            if (action == "add")
-            {
-                HttpContext.Session.SetInt32(selectedProduct, Amount + 1);
-            }
-            //verwijderen van een product
-            else if (action == "remove")
-            {
-                HttpContext.Session.SetInt32(selectedProduct, Amount - 1);
-            }
-            //helemaal verwijderen van het type product, ook als de count 0 word
-            else if (action == "delete")
-            {
-                HttpContext.Session.Remove(selectedProduct);
-            }
-            if (HttpContext.Session.GetInt32(selectedProduct) <= 0)
-            {
-                HttpContext.Session.Remove(selectedProduct);
-            }
+            Amount = (int)HttpContext.Session.GetInt32(selectedProduct);
         }
+        
+        // switch statement because we have 3 buttons
+        // add, remove and delete seemed like the best option
+        switch (action)
+        {
+            case "add":
+                HttpContext.Session.SetInt32(selectedProduct, Amount + 1);
+                break;
+            case "remove":
+                HttpContext.Session.SetInt32(selectedProduct, Amount - 1);
+                break;
+            case "delete":
+                HttpContext.Session.Remove(selectedProduct);
+                break;
+        }
+
+        if (!(HttpContext.Session.GetInt32(selectedProduct) <= 0)) return;
+        HttpContext.Session.Remove(selectedProduct);
     }
 }

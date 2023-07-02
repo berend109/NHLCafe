@@ -4,7 +4,7 @@ using WebdevProjectStarterTemplate.Repositories;
 
 namespace WebdevProjectStarterTemplate.Pages;
 
-public class Overzicht : PageModel
+public class Overview : PageModel
 {
 	private readonly List<Product> products = MainRepository<Product>.Get().OrderBy(p => p.Name).ToList();
 	public List<Product> Products => products;

@@ -3,20 +3,20 @@
 
 @{
 	ViewData["Title"] = "Betaling";
-	decimal? totalPayAmount = 0, payAmount = 0;
+	decimal? totalPayAmount = 0;
 }
 
 <div class="row">
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				@if (HttpContext.Session.Keys.Count() > 0)
+				@if (HttpContext.Session.Keys.Any())
 				{
-					<table class="table table-striped">
+					<table class="table table-striped table-hover">
 						<thead>
 						<tr>
 							<th>Product</th>
-							<th>Aantal</th>
+							<th>Nog te betalen</th>
 							<th>Prijs</th>
 							<th>Totaal</th>
 						</tr>
@@ -24,12 +24,9 @@
 						<tbody>
 						@foreach (var key in HttpContext.Session.Keys)
 						{
-							if (key == "user")
-							{
-								continue;
-							}
-							payAmount = Model.Products.FirstOrDefault(p => p.Name == key)?.Price *
-							            HttpContext.Session.GetInt32(key);
+							if (key == "user") { continue; }
+							decimal? payAmount = Model.Products.FirstOrDefault(p => p.Name == key)?.Price *
+							                     HttpContext.Session.GetInt32(key);
 							totalPayAmount += payAmount;
 							<tr>
 								<td>@key</td>
@@ -46,8 +43,8 @@
 						</tr>
 						</tbody>
 					</table>
-					<form method="post">
-						<button type="submit" class="btn btn-primary" name="paymentButton">Betalen</button>
+					<form method="POST">
+						<button type="submit" class="btn btn-primary float-end">Betalen</button>
 					</form>
 				}
 				else

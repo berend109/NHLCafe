@@ -12,7 +12,7 @@ namespace WebdevProjectStarterTemplate.Repositories
 			return new DbUtils().GetDbConnection();
 		}
 
-		public User Add(string username, string email, string password)
+		public User Add(string? username, string? email, string password)
 		{
 			using var connectin = GetConnection();
 							// insert into ober (Name, Email, Password) values ('username', 'email', 'password');
@@ -25,7 +25,7 @@ namespace WebdevProjectStarterTemplate.Repositories
 			return user;
 		}
 
-		public User Get(string email)
+		public User Get(string? email)
 		{
 			using var connection = GetConnection();
 

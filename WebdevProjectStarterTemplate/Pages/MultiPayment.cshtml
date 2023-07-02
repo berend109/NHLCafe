@@ -10,15 +10,18 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				@if (HttpContext.Session.Keys.Count() > 0)
+				@if (HttpContext.Session.Keys.Any())
 				{
-					<table class="table table-striped">
+					<table class="table table-striped table-hover">
+						<thead>
 						<tr>
 							<th>Product</th>
 							<th>Aantal</th>
 							<th>Prijs</th>
 							<th>Totaal</th>
-						</tr>
+						</tr>	
+						</thead>
+						<tbody>
 						@foreach (var key in HttpContext.Session.Keys)
 						{
 							@if (key == "user")
@@ -26,23 +29,21 @@
 								continue;
 							}
 							payAmount = Model.Products.First(p => p.Name == key)
-								.Price * HttpContext.Session.GetInt32(key);
+										.Price * HttpContext.Session.GetInt32(key);
 							totalPayAmount += payAmount;
 							<form method="POST">
 								<tr>
 									<td>@key</td>
 									<td>
-										<p>
-											<button class="btn" name="action" value="min" asp-page-handler="Add" type="submit">
-												<i class="fa fa-minus-circle"></i>
-											</button>
-											<input type="hidden" name="drinkName" value="@key">
-											@MultiPayment.ProductsToPay[key]
-											<button class="btn" name="action" value="plus" asp-page-handler="Add" type="submit">
-												<i class="fa fa-plus-circle"></i>
-											</button>
-											van @HttpContext.Session.GetInt32(key)
-										</p>
+										<button class="btn" name="action" value="min" asp-page-handler="Add" type="submit">
+											<i class="fa fa-minus-circle"></i>
+										</button>
+										<input type="hidden" name="drinkName" value="@key">
+										@MultiPayment.ProductsToPay[key]
+										<button class="btn" name="action" value="plus" asp-page-handler="Add" type="submit">
+											<i class="fa fa-plus-circle"></i>
+										</button>
+										van @HttpContext.Session.GetInt32(key)
 									</td>
 									<td>
 										€@(Model.Products.First(p => p.Name == key).Price)
@@ -59,20 +60,19 @@
 							<td></td>
 							<td><strong>€@totalPayAmount</strong></td>
 						</tr>
+						</tbody>
+						
 					</table>
+					<form method="POST">
+						<button asp-page-handler="Pay" type="submit" class="btn btn-primary float-end">
+							Betalen
+						</button>
+					</form>
 				}
 				else
 				{
 					<p>Alles is betaald</p>
 				}
-				<form method="POST">
-					@if (HttpContext.Session.Keys.Count() > 0)
-					{
-						<button asp-page-handler="Pay" type="submit" class="btn btn-outline-primary col-3">
-							Betalen
-						</button>
-					}
-				</form>
 			</div>
 		</div>
 	</div>

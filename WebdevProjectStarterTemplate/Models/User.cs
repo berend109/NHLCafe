@@ -6,12 +6,12 @@ namespace WebdevProjectStarterTemplate.Models
 	{
 		public int OberId { get; set; }
 		[Required, MinLength(2), MaxLength(128)]
-		public string Name { get; set; }
+		public string? Name { get; set; }
 		[Required, MinLength(2), MaxLength(128)]
-		public string Email { get; set; }
+		public string? Email { get; set; }
 		[Required, MinLength(2), MaxLength(128)]
-		public string Password { get; set; }
+		public string? Password { get; set; }
 		[Required, MinLength(2), MaxLength(128)]
-		public string Password2 { get; set; }
+		public string? Password2 { get; set; }
 	}
 }
